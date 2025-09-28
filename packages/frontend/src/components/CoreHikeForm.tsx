@@ -2,7 +2,7 @@ import { useForm, type AnyFieldApi } from '@tanstack/react-form'
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
 import { useRef, useState } from 'react'
 
-const queryClient = new QueryClient()
+
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
     return (
@@ -22,15 +22,6 @@ export default function HikeForm() {
     const [hikeRating, setHikeRating] = useState('')
     const [hikeDifficulty, setHikeDifficulty] = useState('')
 
-    const { data, isLoading, refetch } = useQuery({
-        queryKey: ['hike', { name, email, hikeLocation, hikeRating, hikeDifficulty }],
-        queryFn: async () => {
-            const response = await fetch('/api/hike', {
-                method: 'POST',
-                body: JSON.stringify({ name, email, hikeLocation, hikeRating, hikeDifficulty })
-            })
-        }
-    })
     const formFields = useRef(['name', 'email', 'hikeLocation', 'hikeRating', 'hikeDifficulty']
     )
 
@@ -43,11 +34,16 @@ export default function HikeForm() {
             hikeDifficulty: '',
         },
         onSubmit: async ({ formApi, value }) => {
-
+            const response = await fetch('http://localhost:5432/rpc/HikeSubmit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/layerndjson' },
+                body: JSON.stringify({ name: value.name, email: value.email, hikeLocation: value.hikeLocation, hikeRating: value.hikeRating, hikeDifficulty: value.hikeDifficulty })
+            })
         }
     })
 
     return <form onSubmit={(e) => {
+        console.log('submit')
         e.preventDefault();
         e.stopPropagation();
         form.handleSubmit()
@@ -61,7 +57,7 @@ export default function HikeForm() {
                         children={(field) => {
                             return (
                                 <>
-                                    <label htmlFor={field.name}> {x} </label>
+                                    <label htmlFor={field.name}> {x}{':'} </label>
                                     <input type="text" id={field.name} value={field.state.value} onChange={(e) => field.handleChange(e.target.value)} />
                                 </>
                             )
@@ -70,5 +66,6 @@ export default function HikeForm() {
                 </div>
             })}
         </div>
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-md"> Submit </button>
     </form>
 }
