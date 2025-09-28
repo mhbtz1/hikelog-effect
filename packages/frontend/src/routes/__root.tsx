@@ -8,7 +8,10 @@ const RootLayout = (): JSX.Element => (
             <nav className="flex flex-col gap-2">
                 <Link to="/" className="[&.active]:font-bold"> Home </Link>
                 <Link to="/about" className="[&.active]:font-bold"> About </Link>
-                <Link to="/loghike" className="[&.active]:font-bold"> Log Hike </Link>
+                <Link to="/loghike" className="[&.active]:font-bold"> Add Hike </Link>
+                <Link to="/hikes" className="[&.active]:font-bold"> View Hikes </Link>
+                <Link to="/shared_map" className="[&.active]:font-bold"> View Map </Link>
+                <Link to="/friends" className="[&.active]:font-bold"> Add Friends </Link>
             </nav>
         </aside>
         <main className="flex-1 p-4">

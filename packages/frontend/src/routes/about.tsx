@@ -8,6 +8,9 @@ export const Route = createFileRoute('/about')({
 function AboutComponent() {
 
     return (<aside>
-        <Map />
+        <div>
+            <p className="text-muted text-sm text-gray-500 font-medium"> This is Hikelog, an application for storing and sharing hikes with your
+                friends. </p>
+        </div>
     </aside>)
 }
