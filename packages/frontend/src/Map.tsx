@@ -1,31 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import GoogleMapReact from 'google-map-react';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+type MarkerProps = { text: string } & { lat: number; lng: number }
+const Marker = ({ text }: MarkerProps) => (
+    <div className="-translate-x-1/2 -translate-y-full rounded bg-blue-600 px-2 py-1 text-xs text-white shadow">
+        {text}
+    </div>
+)
 
-export default function SimpleMap() {
-    const defaultProps = {
-        center: {
-            lat: 10.99835602,
-            lng: 77.01502627
-        },
-        zoom: 11
-    };
+type MapProps = {
+    height?: number | string
+    apiKey?: string
+    defaultCenter?: { lat: number; lng: number }
+    defaultZoom?: number
+    onSelect?: (lat: number, lng: number) => void
+}
+
+export default function SimpleMap({
+    height = 240,
+    apiKey = '',
+    defaultCenter = { lat: 10.99835602, lng: 77.01502627 },
+    defaultZoom = 11,
+    onSelect,
+}: MapProps) {
+    const [selected, setSelected] = useState<{ lat: number; lng: number } | null>(null)
 
     return (
-        // Important! Always set the container height explicitly
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div style={{ height, width: '100%' }}>
             <GoogleMapReact
-                bootstrapURLKeys={{ key: "" }}
-                defaultCenter={defaultProps.center}
-                defaultZoom={defaultProps.zoom}
+                bootstrapURLKeys={{ key: apiKey }}
+                defaultCenter={defaultCenter}
+                defaultZoom={defaultZoom}
+                onClick={({ lat, lng }) => {
+                    setSelected({ lat, lng })
+                    onSelect?.(lat, lng)
+                }}
             >
-                <AnyReactComponent
-                    lat={59.955413}
-                    lng={30.337844}
-                    text="My Marker"
-                />
+                {selected ? (
+                    <Marker lat={selected.lat} lng={selected.lng} text="Selected" />
+                ) : null}
             </GoogleMapReact>
         </div>
-    );
+    )
 }

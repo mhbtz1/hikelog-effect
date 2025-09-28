@@ -14,7 +14,6 @@ const RootLayout = (): JSX.Element => (
         <main className="flex-1 p-4">
             <Outlet />
         </main>
-        <TanStackRouterDevtools />
     </div>
 )
 
