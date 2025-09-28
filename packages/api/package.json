@@ -14,6 +14,7 @@
   "dependencies": {
     "@effect/platform": "^0.91.1",
     "@effect/platform-node": "^0.97.1",
+    "@effect/rpc": "^0.70.0",
     "@supabase/supabase-js": "^2.58.0",
     "effect": "^3.17.14"
   }
