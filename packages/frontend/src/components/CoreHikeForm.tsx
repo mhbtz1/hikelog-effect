@@ -35,7 +35,7 @@ export default function HikeForm() {
             hikeDifficulty: '',
         },
         onSubmit: async ({ formApi, value }) => {
-            const response = await fetch('http://localhost:5432/rpc/HikeSubmit', {
+            const response = await fetch('http://localhost:5445/rpc/HikeSubmit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/layerndjson' },
                 body: JSON.stringify({ name: value.name, email: value.email, hikeLocation: value.hikeLocation, hikeRating: value.hikeRating, hikeDifficulty: value.hikeDifficulty })

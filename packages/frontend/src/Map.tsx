@@ -19,14 +19,14 @@ type MapProps = {
 export default function SimpleMap({
     height = 240,
     apiKey = '',
-    defaultCenter = { lat: 10.99835602, lng: 77.01502627 },
+    defaultCenter = { lat: 37.7749, lng: -122.4194 },
     defaultZoom = 11,
     onSelect,
 }: MapProps) {
     const [selected, setSelected] = useState<{ lat: number; lng: number } | null>(null)
 
     return (
-        <div style={{ height, width: '100%' }}>
+        <div className="h-full w-full">
             <GoogleMapReact
                 bootstrapURLKeys={{ key: apiKey }}
                 defaultCenter={defaultCenter}
